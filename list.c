@@ -18,11 +18,16 @@ list *createList() {
 
 void I_insert(list *lst, char *word, int index) {
 
+    /*   if(strcmp(word, ' ') == 0){
+           return;
+       }*/
+
     element *newElement;
     element *tmpElement;
 
     newElement = malloc(sizeof(element));
     strcpy(newElement->word, word);
+    newElement->count = 1;
 
     if (lst->head == NULL) {
         newElement->next = NULL;
@@ -43,8 +48,8 @@ void I_insert(list *lst, char *word, int index) {
 
 
 void I_delete(list *lst, char *word) {
-
     element *current = lst->head;
+
 
     if (strcmp(current->word, word) == 0) {
         lst->head = current->next;
@@ -68,13 +73,12 @@ void I_delete(list *lst, char *word) {
 void I_print(list *lst) {
     element *current = lst->head;
     while (current) {
-        printf("%s\n", current->word);
+        printf("%s: %d\n", current->word, current->count);
         current = current->next;
     }
 }
 
 element *I_find(list *lst, char *word) {
-
     element *current = lst->head;
 
     while (current) {
@@ -83,7 +87,5 @@ element *I_find(list *lst, char *word) {
         }
         current = current->next;
     }
-
     return NULL;
-
 }
