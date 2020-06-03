@@ -57,10 +57,12 @@ int main() {
  */
 void printLetterCount(list *lst) {
     int frequencies[26] = {0};
+    int global_count = 0;
 
     element *current = lst->head;
     while (current != NULL) {
         for (char *h = current->word; *h != '\0'; h++) {
+            global_count += current->count;
             frequencies[*h - 'a'] += current->count;
         }
         current = current->next;
@@ -69,6 +71,7 @@ void printLetterCount(list *lst) {
     for (int i = 0; i < 26; ++i) {
         printf("%c: %d\n", i + 'a', frequencies[i]);
     }
+    printf("sum letters: %d\n", global_count);
 }
 
 /**
