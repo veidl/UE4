@@ -75,10 +75,10 @@ void filterWordsLt100(list *lst) {
 
 
 int main() {
-
     // This is exercise 1
     exercise_1();
 
+    // This is exercise 2
     list *mainList = createList();
 
     FILE *datei;
