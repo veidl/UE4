@@ -36,8 +36,6 @@ int main() {
 
 }*/
 
-
-
 //
 //  main.c
 //  ADAT Projekt Listen
@@ -53,9 +51,45 @@ int main() {
 #include "list.h"
 
 
+/**
+ * based on Herbert Paulis
+ * @param lst
+ */
+void printLetterCount(list *lst) {
+    int frequencies[26] = {0};
+
+    element *current = lst->head;
+    while (current != NULL) {
+        for (char *h = current->word; *h != '\0'; h++) {
+            frequencies[*h - 'a'] += current->count;
+        }
+        current = current->next;
+    }
+
+    for (int i = 0; i < 26; ++i) {
+        printf("%c: %d\n", i + 'a', frequencies[i]);
+    }
+}
+
+/**
+ * filter out words with a lower count then 100
+ * @param lst
+ */
+void filterWordsLt100(list *lst) {
+    element *current = lst->head;
+
+    while (current) {
+        // need temp 'cause element is going to be deleted
+        element *tmpElement = current;
+        current = tmpElement->next;
+        if (tmpElement->count < 100) {
+            I_delete(lst, tmpElement->word);
+        }
+    }
+}
+
+
 int main() {
-
-
     list *mainList = createList();
 
     FILE *datei;
@@ -75,7 +109,6 @@ int main() {
         if (isspace(zeile[0]))  // Eliminieren von Leerzeilen
             continue;
         zeile[strcspn(zeile, "\r\n")] = 0; // ersetzt beliebeige Kombination von CR&LF durch 0
-//        printf("%s\n", zeile);  // Testausgabe
 
         // Alternative fuer die folgende while-schleife: C-Funktion strtok()
         // https://en.cppreference.com/w/c/string/byte/strtok
@@ -112,63 +145,29 @@ int main() {
             /*******************************************************************************/
             // Hier ist das jeweilige Wort in Variable wort enthalten zur spaeteren Weiterverarbeitung in der Liste
             // Achtung: wort kann Leerstring "" enthalten (z.B. wenn Zahl im Text war)!
-            if (wort_index != NULL) {
-                element *e = I_find(mainList, wort);
 
-                if (e == NULL) {
-                    I_insert(mainList, wort, mainList->count);
-                } else {
-                    e->count++;
-                }
-
+            element *e = I_find(mainList, wort);
+            // only insert new word else up the counter of the word
+            if (e == NULL) {
+                I_insert(mainList, wort, mainList->count);
+            } else {
+                e->count++;
             }
-//            printf("%s:", wort);    // Testausgabe
             /*******************************************************************************/
         }
-//        printf("\n");   // Nur fuer Testausgabe
     }
-//    I_print(mainList);
-//    I_print_letter_count(mainList);
+    printf("BEFORE FILTERING\n");
+    I_print(mainList);
+    printLetterCount(mainList);
 
-    printf("\n");
+    printf("\nAFTER FILTERING\n");
 
-    getOnlySome(mainList);
-//    I_print(mainList);
-//    I_print_letter_count(mainList);
+    filterWordsLt100(mainList);
 
+    printLetterCount(mainList);
 
     return 0;
 }
 
-void I_print_letter_count(list *lst) {
-    int frequencies[26] = {0};
-
-    element *current = lst->head;
-    while (current) {
-        for (char *h = current->word; *h != '\0'; h++) {
-            frequencies[*h - 'a'] += current->count;
-        }
-        current = current->next;
-    }
-
-    for (int i = 0; i < 26; ++i) {
-        printf("%c: %d\n", i + 'a', frequencies[i]);
-    }
-}
-
-void getOnlySome(list *lst) {
-    element *current = lst->head;
-
-    // TODO fix that -> cant delete next element (prob the freeing of memory is the issue)
-    while (current) {
-        element *tmpElement = current;
-//        int tmp = current->count;
-
-        if (current->count < 100) {
-            I_delete(lst, current->word);
-        }
-        current = tmpElement->next;
-    }
-}
 
 

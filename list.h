@@ -1,5 +1,5 @@
 //
-// Created by Thomas on 01/06/2020.
+// Created by Thomas, Sahil, Oliver on 01/06/2020.
 //
 
 #ifndef UE4_LIST_H
@@ -25,10 +25,6 @@ void I_delete(list *lst, char *word);
 
 void I_print(list *lst);
 
-void I_print_letter_count(list *lst);
-
 element *I_find(list *lst, char *word);
-
-void getOnlySome(list *lst);
 
 #endif //UE4_LIST_H
