@@ -1,55 +1,37 @@
-/*#include <stdio.h>
-#include "list.h"
-#include "string.h"
-
-
-int main() {
-
-    char buffer[100];
-
-    list *mainList = createList();
-
-    strcpy(buffer, "test");
-
-    I_insert(mainList, buffer, 0);
-
-    strcpy(buffer, "HUGOFISCHKOPF");
-    I_insert(mainList, buffer, 1);
-
-    strcpy(buffer, "sahilp");
-    I_insert(mainList, buffer, 2);
-
-    strcpy(buffer, "oliver");
-    I_insert(mainList, buffer, 3);
-
-    I_print(mainList);
-
-    I_delete(mainList, "sahilp");
-
-    printf("\n");
-    I_print(mainList);
-
-    I_find(mainList, "oliver");
-
-    return 0;
-
-
-}*/
-
-//
-//  main.c
-//  ADAT Projekt Listen
-//
-//  Created by Herbert Paulis on 12.05.20.
-//  Copyright © 2020 Herbert Paulis. All rights reserved.
-//
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include "list.h"
 
+
+void exercise_1(){
+    char buffer[100];
+
+    list *exercise_1_list = createList();
+
+    strcpy(buffer, "test");
+
+    I_insert(exercise_1_list, buffer, 0);
+
+    strcpy(buffer, "thomas");
+    I_insert(exercise_1_list, buffer, 1);
+
+    strcpy(buffer, "oliver");
+    I_insert(exercise_1_list, buffer, 2);
+
+    strcpy(buffer, "sahil");
+    I_insert(exercise_1_list, buffer, 3);
+
+    I_print(exercise_1_list);
+
+    I_delete(exercise_1_list, "sahil");
+
+    printf("\n");
+    I_print(exercise_1_list);
+
+    I_find(exercise_1_list, "oliver");
+}
 
 /**
  * based on Herbert Paulis
@@ -93,6 +75,10 @@ void filterWordsLt100(list *lst) {
 
 
 int main() {
+
+    // This is exercise 1
+    exercise_1();
+
     list *mainList = createList();
 
     FILE *datei;
